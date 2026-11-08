@@ -187,18 +187,29 @@ footer{padding:34px 24px 96px;text-align:center;color:var(--mute);font-size:14px
 @keyframes whiteglow{0%,100%{text-shadow:0 0 6px rgba(255,255,255,.55),0 0 14px rgba(255,255,255,.25)}50%{text-shadow:0 0 10px rgba(255,255,255,.95),0 0 24px rgba(255,255,255,.55),0 0 40px rgba(167,235,242,.35)}}
 @media(prefers-reduced-motion:reduce){.topnav,.slider{transition:none}.navpill a:hover{animation:none}}
 
-/* ================= tone cards: Results + Experience in palette shades ================= */
-.tone{color:var(--fg);border-color:var(--bd,rgba(167,235,242,.18));background:linear-gradient(135deg,var(--bg1),var(--bg2))}
+/* ================= tone cards: dark glass at rest, palette colour only on hover ================= */
+.tone{position:relative;isolation:isolate;overflow:hidden;color:var(--fg);background:var(--rest);border-color:rgba(167,235,242,.16)}
+.tone::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--hov);opacity:0;transition:opacity .4s ease}
+.tone:hover::before,.tone:focus-within::before{opacity:1}
+.tone:hover,.tone:focus-within{--fg:var(--hfg);--fm:var(--hfm);--chip:var(--hchip)}
+.tone h3,.tone p,.tone .stat b,.tone .stat span,.tone .meta{transition:color .4s ease,background .4s ease}
 .tone h3{color:var(--fg)}
 .tone p,.tone .stat span{color:var(--fm)}
 .tone .meta{color:var(--fg);background:var(--chip);border-color:transparent}
 .tone .stat b{background:none;color:var(--fg);-webkit-text-fill-color:currentColor}
-.t1{--bg1:#26658C;--bg2:#023859;--fg:#EAFBFD;--fm:rgba(234,251,253,.82);--chip:rgba(1,28,64,.42)}
-.t2{--bg1:#A7EBF2;--bg2:#54ACBF;--fg:#011C40;--fm:rgba(1,28,64,.8);--chip:rgba(1,28,64,.13);--bd:rgba(1,28,64,.15)}
-.t3{--bg1:#023859;--bg2:#011C40;--fg:#EAFBFD;--fm:rgba(234,251,253,.8);--chip:rgba(84,172,191,.22)}
-.t4{--bg1:#54ACBF;--bg2:#6DBACB;--fg:#011C40;--fm:rgba(1,28,64,.82);--chip:rgba(1,28,64,.13);--bd:rgba(1,28,64,.15)}
-.t5{--bg1:#011C40;--bg2:#023859;--fg:#EAFBFD;--fm:rgba(234,251,253,.8);--chip:rgba(84,172,191,.22);--bd:rgba(84,172,191,.4)}
-.t6{--bg1:#1F5679;--bg2:#26658C;--fg:#EAFBFD;--fm:rgba(234,251,253,.84);--chip:rgba(1,28,64,.42)}
+.tone .num{color:inherit;opacity:.16}
+.rt1,.rt2,.rt3,.et1,.et2,.et3,.et4,.et5,.et6{--fg:#EAFBFD;--fm:rgba(234,251,253,.78);--chip:rgba(167,235,242,.12);--hfg:#EAFBFD;--hfm:rgba(234,251,253,.86);--hchip:rgba(1,28,64,.4)}
+/* Results: dark glass shades; the bright palette colours appear on hover */
+.rt1{--rest:linear-gradient(135deg,rgba(2,56,89,.82),rgba(1,28,64,.74));--hov:linear-gradient(135deg,#26658C,#023859)}
+.rt2{--rest:linear-gradient(135deg,rgba(1,28,64,.86),rgba(2,56,89,.7));--hov:linear-gradient(135deg,#A7EBF2,#54ACBF);--hfg:#011C40;--hfm:rgba(1,28,64,.8);--hchip:rgba(1,28,64,.13)}
+.rt3{--rest:linear-gradient(135deg,rgba(4,41,77,.84),rgba(1,22,50,.8));--hov:linear-gradient(135deg,#54ACBF,#6DBACB);--hfg:#011C40;--hfm:rgba(1,28,64,.82);--hchip:rgba(1,28,64,.13)}
+/* Experience: only dark glass shades, with a deeper teal glow on hover */
+.et1{--rest:linear-gradient(135deg,rgba(2,56,89,.82),rgba(1,28,64,.74));--hov:linear-gradient(135deg,#26658C,#023859)}
+.et2{--rest:linear-gradient(135deg,rgba(4,41,77,.84),rgba(2,26,56,.8));--hov:linear-gradient(135deg,#1F5679,#26658C)}
+.et3{--rest:linear-gradient(135deg,rgba(1,28,64,.86),rgba(2,56,89,.66));--hov:linear-gradient(135deg,#023859,#2a6a8f)}
+.et4{--rest:linear-gradient(135deg,rgba(10,53,86,.8),rgba(3,32,63,.78));--hov:linear-gradient(135deg,#26658C,#1b4f73)}
+.et5{--rest:linear-gradient(135deg,rgba(2,36,68,.86),rgba(1,22,50,.82));--hov:linear-gradient(135deg,#2a6a8f,#04304f)}
+.et6{--rest:linear-gradient(135deg,rgba(11,58,94,.78),rgba(4,35,65,.8));--hov:linear-gradient(135deg,#1F5679,#023859)}
 .rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
 .rs{padding:30px 32px}
 .rs .stat b{font-size:clamp(48px,6vw,76px)}

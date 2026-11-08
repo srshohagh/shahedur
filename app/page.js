@@ -79,7 +79,7 @@ export default function Home() {
           <SH i="bars" title="Results so far" sub="Numbers from my Fiverr sales dashboard, April to September 2026." />
           <div className="rgrid">
             {stats.map((s, i) => (
-              <div className={`g tone t${[1, 2, 3][i]} rs`} key={s.l}>
+              <div className={`g tone rt${i + 1} rs`} key={s.l}>
                 <div className="stat"><b><CountUp to={s.v} prefix={s.prefix} /></b><span>{s.l}</span></div>
               </div>
             ))}
@@ -90,7 +90,7 @@ export default function Home() {
           <SH i="briefcase" title="Experience" sub="Sales, marketing, content and customer work, newest first." />
           <div className="grid2">
             {jobs.map((j, i) => (
-              <div className={`g tone t${(i % 6) + 1} job`} key={j.t}>
+              <div className={`g tone et${(i % 6) + 1} job`} key={j.t}>
                 <span className="num">{String(i + 1).padStart(2, '0')}</span>
                 <h3>{j.t}</h3><div className="meta">{j.m}</div><p>{j.d}</p>
               </div>
