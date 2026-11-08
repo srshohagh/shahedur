@@ -12,10 +12,13 @@ const ORBITS = [{ a: 0.5, b: 0.19, r: 0 }, { a: 0.5, b: 0.19, r: Math.PI / 3 }, 
 
 // Each scene returns target points (or null = "not built yet"). Unplaced points float freely.
 const SCENES = {
-  hero: { link: 0.2, fn: () => [] },
+  hero: { link: 0.2, fade: 1, speed: 1, drift: 1, fn: () => [] },
+
+  // About: calm, sparse, slow-moving network so the text stays easy to read
+  about: { link: 0.15, fade: 0.45, speed: 0.6, drift: 0.4, fn: () => [] },
 
   // Results: bars and a trend line that keep rising
-  results: { link: 0.095, fn: (t, m, cx, cy) => {
+  results: { link: 0.095, fade: 0.75, speed: 1, drift: 0.5, fn: (t, m, cx, cy) => {
     const g = ease((t % 7) / 4), base = cy + m * 0.4, s = m * 0.062, out = [];
     [3, 5, 6, 8, 10, 13].forEach((h, i) => {
       const x = cx + (i - 2.5) * m * 0.15;
@@ -28,7 +31,7 @@ const SCENES = {
   } },
 
   // Experience: a staircase career path climbing to a goal
-  experience: { link: 0.075, fn: (t, m, cx, cy) => {
+  experience: { link: 0.075, fade: 0.7, speed: 0.85, drift: 0.5, fn: (t, m, cx, cy) => {
     const g = ease((t % 8) / 5.5), sx = m * 0.13, sy = m * 0.1, n = 7;
     const x0 = cx - (n * sx) / 2, y0 = cy + (n * sy) / 2, path = [];
     for (let i = 0; i < n; i++) {
@@ -41,7 +44,7 @@ const SCENES = {
   } },
 
   // Services: an atom, a connected nucleus with electrons orbiting three tilted rings
-  services: { link: 0.09, fade: 0.75,
+  services: { link: 0.09, fade: 0.75, speed: 0.8, drift: 0.5,
     fn: (t, m, cx, cy) => {
       const out = [...ring(cx, cy, m * 0.05, 7, t * 0.6), [cx, cy]];
       ORBITS.forEach((o, k) => {
@@ -60,7 +63,7 @@ const SCENES = {
     } },
 
   // Content and video: a spinning reel around a play button
-  creative: { link: 0.095, fn: (t, m, cx, cy) => {
+  creative: { link: 0.095, fade: 0.7, speed: 1, drift: 0.5, fn: (t, m, cx, cy) => {
     const r = m * 0.38, p = 1 + Math.sin(t * 2) * 0.04, out = ring(cx, cy, r, 30, t * 0.25);
     const tri = [[cx - r * 0.28 * p, cy - r * 0.4 * p], [cx - r * 0.28 * p, cy + r * 0.4 * p], [cx + r * 0.44 * p, cy]];
     for (let i = 0; i < 3; i++) out.push(...line(...tri[i], ...tri[(i + 1) % 3], 7).slice(0, 6));
@@ -69,7 +72,7 @@ const SCENES = {
   } },
 
   // Skills: a light, rotating globe (kept faint so the text stays readable)
-  skills: { link: 0.2, fade: 0.38, fn: (t, m, cx, cy) => {
+  skills: { link: 0.2, fade: 0.4, speed: 0.6, drift: 0.4, fn: (t, m, cx, cy) => {
     const R = m * 0.4, n = 46, out = [];
     for (let i = 0; i < n; i++) {
       const y = 1 - (i / (n - 1)) * 2, rad = Math.sqrt(1 - y * y), th = i * 2.399963 + t * 0.35;
@@ -80,7 +83,7 @@ const SCENES = {
   } },
 
   // Education (physics): an atom with orbiting electrons
-  education: { link: 0.1, fn: (t, m, cx, cy) => {
+  education: { link: 0.1, fade: 0.6, speed: 0.8, drift: 0.5, fn: (t, m, cx, cy) => {
     const out = ring(cx, cy, m * 0.035, 6, t);
     [0, 1, 2].forEach((k) => {
       const rot = (k * Math.PI) / 3 + Math.PI / 6, a = m * 0.42, b = m * 0.15;
@@ -92,20 +95,28 @@ const SCENES = {
     return out;
   } },
 
-  // Contact: a floating envelope sending out signals
-  contact: { link: 0.095, fade: 1, anchor: '[data-anim="contact"]', fn: (t, m, cx, cy) => {
-    const w = m * 0.62, h = m * 0.42, bob = Math.sin(t * 1.2) * m * 0.02, x0 = cx - w / 2, y0 = cy - h / 2 + bob;
-    const c = [[x0, y0], [x0 + w, y0], [x0 + w, y0 + h], [x0, y0 + h]], out = [];
-    for (let i = 0; i < 4; i++) out.push(...line(...c[i], ...c[(i + 1) % 4], i % 2 ? 6 : 9).slice(0, -1));
-    out.push(...line(x0, y0, cx, cy + bob, 6).slice(1), ...line(x0 + w, y0, cx, cy + bob, 6).slice(1, -1));
-    for (let k = 0; k < 3; k++) {
-      const R = m * (0.32 + ((t * 0.12 + k / 3) % 1) * 0.2);
-      for (let i = 0; i < 16; i++) { const a = (i / 16) * TAU + k; out.push([cx + R * Math.cos(a), cy + R * 0.62 * Math.sin(a)]); }
-    }
-    return out;
-  } },
+  // Contact: a smaller, glowing envelope with signal rings kept at a clear distance
+  contact: { link: 0.095, fade: 1, speed: 1, drift: 0.6, anchor: '[data-anim="contact"]',
+    fn: (t, m, cx, cy) => {
+      const w = m * 0.5, h = m * 0.34, bob = Math.sin(t * 1.2) * m * 0.015, x0 = cx - w / 2, y0 = cy - h / 2 + bob;
+      const c = [[x0, y0], [x0 + w, y0], [x0 + w, y0 + h], [x0, y0 + h]], out = [];
+      for (let i = 0; i < 4; i++) out.push(...line(...c[i], ...c[(i + 1) % 4], i % 2 ? 5 : 7).slice(0, -1));
+      out.push(...line(x0, y0, cx, cy + bob, 5).slice(1), ...line(x0 + w, y0, cx, cy + bob, 5).slice(1, -1));
+      for (let k = 0; k < 3; k++) {
+        const R = m * (0.5 + ((t * 0.1 + k / 3) % 1) * 0.1);
+        for (let i = 0; i < 14; i++) { const a = (i / 14) * TAU + k * 0.7; out.push([cx + R * Math.cos(a), cy + R * 0.5 * Math.sin(a)]); }
+      }
+      return out;
+    },
+    decor: (x, t, m, cx, cy) => {
+      const pulse = 0.5 + 0.5 * Math.sin(t * 2.2);
+      x.save(); x.globalAlpha *= Math.min(1, t / 1) * (0.55 + 0.45 * pulse);
+      const g = x.createRadialGradient(cx, cy, m * 0.04, cx, cy, m * 0.42);
+      g.addColorStop(0, 'rgba(167,235,242,.30)'); g.addColorStop(0.55, 'rgba(84,172,191,.13)'); g.addColorStop(1, 'rgba(84,172,191,0)');
+      x.fillStyle = g; x.beginPath(); x.arc(cx, cy, m * 0.42, 0, TAU); x.fill(); x.restore();
+    } },
 };
-const IDS = ['results', 'experience', 'services', 'creative', 'skills', 'education', 'contact'];
+const IDS = ['about', 'results', 'experience', 'services', 'creative', 'skills', 'education', 'contact'];
 
 // ===== SPEED SETTINGS (change these two numbers) =====
 const SPEED = 1.4;    // how fast the shapes animate (1 = normal, 2 = twice as fast)
@@ -148,7 +159,8 @@ export default function NetworkBackground() {
         const el = document.querySelector(sc.anchor), r = el && el.getBoundingClientRect();
         if (r && r.width > 40) { cx = r.left + r.width / 2; cy = r.top + r.height / 2; m = Math.min(r.width / 0.9, r.height / 0.62, m * 1.2); }
       }
-      const pts = still ? [] : sc.fn((ms / 1000 - enter) * SPEED, m, cx, cy, W, H);
+      const spd = SPEED * (sc.speed ?? 1), drift = sc.drift ?? 0.6;
+      const pts = still ? [] : sc.fn((ms / 1000 - enter) * spd, m, cx, cy, W, H);
       link += ((scene === 'hero' ? 150 : typeof sc.link === 'function' ? sc.link(m, W) : sc.link * m) - link) * 0.1;
       const L2 = link * link;
       const fTarget = scene === 'hero' ? 1 : typeof sc.fade === 'function' ? sc.fade(W) : sc.fade ?? 0.8;
@@ -161,7 +173,7 @@ export default function NetworkBackground() {
         p.on = !!tg;
         if (tg) { p.x += (tg[0] - p.x) * FOLLOW; p.y += (tg[1] - p.y) * FOLLOW; }
         else if (!still) {
-          p.x += p.vx; p.y += p.vy;
+          p.x += p.vx * drift; p.y += p.vy * drift;
           if (p.x < 0 || p.x > W) p.vx *= -1;
           if (p.y < 0 || p.y > H) p.vy *= -1;
         }
@@ -189,9 +201,10 @@ export default function NetworkBackground() {
         for (let k = 0; k < a.length; k += 4) { x.moveTo(a[k], a[k + 1]); x.lineTo(a[k + 2], a[k + 3]); }
         x.stroke();
       }
-      if (sc.decor && !still) sc.decor(x, ms / 1000 * SPEED - enter * SPEED, m, cx, cy, W, H);
+      if (sc.decor && !still) sc.decor(x, (ms / 1000 - enter) * spd, m, cx, cy, W, H);
       // dots: three batched fills (glow, placed, free) instead of per-dot shadows
-      x.fillStyle = 'rgba(84,172,191,.2)'; x.beginPath();
+      const pulse = scene === 'contact' ? 0.5 + 0.5 * Math.sin((ms / 1000 - enter) * spd * 2.2) : 0;
+      x.fillStyle = scene === 'contact' ? `rgba(84,172,191,${0.14 + 0.2 * pulse})` : 'rgba(84,172,191,.2)'; x.beginPath();
       for (const p of ps) if (p.on) { x.moveTo(p.x + 9, p.y); x.arc(p.x, p.y, 9, 0, TAU); }
       x.fill();
       x.fillStyle = '#d6f6fa'; x.beginPath();
@@ -200,6 +213,14 @@ export default function NetworkBackground() {
       x.fillStyle = 'rgba(167,235,242,.4)'; x.beginPath();
       for (const p of ps) if (!p.on) { x.moveTo(p.x + 2.2, p.y); x.arc(p.x, p.y, 2.2, 0, TAU); }
       x.fill();
+      // frosted glass: hide the structure behind content cards so it never competes with text
+      x.save(); x.globalAlpha = 1; x.globalCompositeOperation = 'destination-out'; x.fillStyle = 'rgba(0,0,0,.9)'; x.beginPath();
+      document.querySelectorAll('.g, .mailcard').forEach((el) => {
+        const q = el.getBoundingClientRect();
+        if (q.bottom < 0 || q.top > H || q.width < 2) return;
+        if (x.roundRect) x.roundRect(q.left, q.top, q.width, q.height, 20); else x.rect(q.left, q.top, q.width, q.height);
+      });
+      x.fill(); x.restore();
       if (!still) raf = requestAnimationFrame(draw);
     };
 
