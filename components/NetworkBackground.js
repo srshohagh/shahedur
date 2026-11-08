@@ -95,17 +95,13 @@ const SCENES = {
     return out;
   } },
 
-  // Contact: a smaller, glowing envelope with signal rings kept at a clear distance
-  contact: { link: 0.095, fade: 1, speed: 1, drift: 0.6, anchor: '[data-anim="contact"]',
+  // Contact: a smaller, glowing envelope on its own (no dots around it)
+  contact: { link: 0.095, fade: 1, speed: 1, drift: 0.6, solo: true, anchor: '[data-anim="contact"]',
     fn: (t, m, cx, cy) => {
       const w = m * 0.5, h = m * 0.34, bob = Math.sin(t * 1.2) * m * 0.015, x0 = cx - w / 2, y0 = cy - h / 2 + bob;
       const c = [[x0, y0], [x0 + w, y0], [x0 + w, y0 + h], [x0, y0 + h]], out = [];
       for (let i = 0; i < 4; i++) out.push(...line(...c[i], ...c[(i + 1) % 4], i % 2 ? 5 : 7).slice(0, -1));
       out.push(...line(x0, y0, cx, cy + bob, 5).slice(1), ...line(x0 + w, y0, cx, cy + bob, 5).slice(1, -1));
-      for (let k = 0; k < 3; k++) {
-        const R = m * (0.5 + ((t * 0.1 + k / 3) % 1) * 0.1);
-        for (let i = 0; i < 14; i++) { const a = (i / 14) * TAU + k * 0.7; out.push([cx + R * Math.cos(a), cy + R * 0.5 * Math.sin(a)]); }
-      }
       return out;
     },
     decor: (x, t, m, cx, cy) => {
@@ -184,7 +180,7 @@ export default function NetworkBackground() {
         const p = ps[i];
         for (let j = i + 1; j < ps.length; j++) {
           const q = ps[j], dx = p.x - q.x, dy = p.y - q.y, d2 = dx * dx + dy * dy;
-          if (d2 < L2) {
+          if (d2 < L2 && !(sc.solo && !(p.on && q.on))) {
             const lvl = Math.min(5, Math.floor((1 - Math.sqrt(d2) / link) * 6));
             segs[(p.on && q.on ? 6 : 0) + lvl].push(p.x, p.y, q.x, q.y);
           }
@@ -211,7 +207,7 @@ export default function NetworkBackground() {
       for (const p of ps) if (p.on) { x.moveTo(p.x + 4, p.y); x.arc(p.x, p.y, 4, 0, TAU); }
       x.fill();
       x.fillStyle = 'rgba(167,235,242,.4)'; x.beginPath();
-      for (const p of ps) if (!p.on) { x.moveTo(p.x + 2.2, p.y); x.arc(p.x, p.y, 2.2, 0, TAU); }
+      for (const p of ps) if (!p.on && !sc.solo) { x.moveTo(p.x + 2.2, p.y); x.arc(p.x, p.y, 2.2, 0, TAU); }
       x.fill();
       // frosted glass: hide the structure behind content cards so it never competes with text
       x.save(); x.globalAlpha = 1; x.globalCompositeOperation = 'destination-out'; x.fillStyle = 'rgba(0,0,0,.9)'; x.beginPath();
