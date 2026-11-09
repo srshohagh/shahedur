@@ -209,6 +209,14 @@ export default function NetworkBackground() {
       x.fillStyle = 'rgba(167,235,242,.4)'; x.beginPath();
       for (const p of ps) if (!p.on && !sc.solo) { x.moveTo(p.x + 2.2, p.y); x.arc(p.x, p.y, 2.2, 0, TAU); }
       x.fill();
+      // hero only: keep the floating network behind the hero cards, as in the original design
+      x.save(); x.globalAlpha = 1; x.globalCompositeOperation = 'destination-out'; x.fillStyle = 'rgba(0,0,0,.9)'; x.beginPath();
+      document.querySelectorAll('header.top .g').forEach((el) => {
+        const q = el.getBoundingClientRect();
+        if (q.bottom < 0 || q.top > H || q.width < 2) return;
+        if (x.roundRect) x.roundRect(q.left, q.top, q.width, q.height, 20); else x.rect(q.left, q.top, q.width, q.height);
+      });
+      x.fill(); x.restore();
       if (!still) raf = requestAnimationFrame(draw);
     };
 
