@@ -21,11 +21,14 @@ main,header,footer,.navwrap{position:relative;z-index:1}
 section{padding:30px 0;scroll-margin-top:84px}
 
 /* ---------- glass cards ---------- */
-.g{background:linear-gradient(180deg,rgba(2,56,89,.56),rgba(2,56,89,.34));border:1px solid var(--line);border-radius:22px;
-  box-shadow:inset 0 1px 0 rgba(167,235,242,.12),0 18px 40px rgba(0,8,26,.35);
-  transition:transform .25s,border-color .25s,box-shadow .25s}
-.g:hover{transform:translateY(-3px);border-color:rgba(84,172,191,.55);
-  box-shadow:inset 0 1px 0 rgba(167,235,242,.22),0 20px 44px rgba(0,8,26,.45),0 0 28px rgba(84,172,191,.18)}
+.g{background:linear-gradient(180deg,rgba(2,56,89,.30),rgba(2,56,89,.15));border:1px solid var(--line);border-radius:22px;
+  box-shadow:inset 0 1px 0 rgba(167,235,242,.12),inset 0 0 0 0 rgba(1,22,52,0),0 18px 40px rgba(0,8,26,.28);
+  transition:transform .25s,border-color .25s,box-shadow .45s}
+/* hover: the card turns solid dark, so the background animation is hidden behind it */
+.g:hover,.g:focus-within{transform:translateY(-3px);border-color:rgba(84,172,191,.55);
+  box-shadow:inset 0 1px 0 rgba(167,235,242,.22),inset 0 0 0 700px rgba(1,24,56,.97),0 20px 44px rgba(0,8,26,.45),0 0 28px rgba(84,172,191,.18)}
+/* keep text readable where animation lines pass behind transparent cards */
+.g h3,.g p,.g li span{text-shadow:0 1px 8px rgba(1,16,40,.6)}
 .ic{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:11px;color:var(--c1);flex:none;
   background:rgba(84,172,191,.16);border:1px solid var(--line)}
 .ic.lg{width:46px;height:46px;border-radius:13px;margin-bottom:14px;background:linear-gradient(135deg,rgba(38,101,140,.9),rgba(84,172,191,.45))}
@@ -98,7 +101,7 @@ header.top{position:relative;overflow:hidden;isolation:isolate}
 /* ---------- results ---------- */
 .result{display:flex;align-items:center;gap:32px;padding:30px 36px;flex-wrap:wrap}
 .stat b{display:block;font:700 clamp(64px,9vw,104px)/.9 var(--display);background:linear-gradient(90deg,var(--c1),var(--c2));-webkit-background-clip:text;background-clip:text;color:transparent}
-.stat span{display:block;color:var(--mute);margin-top:8px;letter-spacing:.02em}
+.stat>span{display:block;color:var(--mute);margin-top:8px;letter-spacing:.02em}
 .result p{flex:1;min-width:220px;color:var(--mute);max-width:36ch}
 
 /* ---------- grids / cards ---------- */
@@ -192,28 +195,28 @@ footer{padding:34px 24px 96px;text-align:center;color:var(--mute);font-size:14px
 .tone::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--hov);opacity:0;transition:opacity .4s ease}
 .tone:hover::before,.tone:focus-within::before{opacity:1}
 .tone:hover,.tone:focus-within{--fg:var(--hfg);--fm:var(--hfm);--chip:var(--hchip)}
-.tone h3,.tone p,.tone .stat b,.tone .stat span,.tone .meta{transition:color .4s ease,background .4s ease}
+.tone h3,.tone p,.tone .stat b,.tone .stat>span,.tone .meta{transition:color .4s ease,background .4s ease}
 .tone h3{color:var(--fg)}
-.tone p,.tone .stat span{color:var(--fm)}
+.tone p,.tone .stat>span{color:var(--fm)}
 .tone .meta{color:var(--fg);background:var(--chip);border-color:transparent}
 .tone .stat b{background:none;color:var(--fg);-webkit-text-fill-color:currentColor}
 .tone .num{color:inherit;opacity:.16}
 .rt1,.rt2,.rt3,.et1,.et2,.et3,.et4,.et5,.et6{--fg:#EAFBFD;--fm:rgba(234,251,253,.78);--chip:rgba(167,235,242,.12);--hfg:#EAFBFD;--hfm:rgba(234,251,253,.86);--hchip:rgba(1,28,64,.4)}
 /* Results: dark glass shades; the bright palette colours appear on hover */
-.rt1{--rest:linear-gradient(135deg,rgba(2,56,89,.82),rgba(1,28,64,.74));--hov:linear-gradient(135deg,#26658C,#023859)}
-.rt2{--rest:linear-gradient(135deg,rgba(1,28,64,.86),rgba(2,56,89,.7));--hov:linear-gradient(135deg,#A7EBF2,#54ACBF);--hfg:#011C40;--hfm:rgba(1,28,64,.8);--hchip:rgba(1,28,64,.13)}
-.rt3{--rest:linear-gradient(135deg,rgba(4,41,77,.84),rgba(1,22,50,.8));--hov:linear-gradient(135deg,#54ACBF,#6DBACB);--hfg:#011C40;--hfm:rgba(1,28,64,.82);--hchip:rgba(1,28,64,.13)}
+.rt1{--rest:linear-gradient(135deg,rgba(2,56,89,.34),rgba(1,28,64,.20));--hov:linear-gradient(135deg,#26658C,#023859)}
+.rt2{--rest:linear-gradient(135deg,rgba(1,28,64,.36),rgba(2,56,89,.18));--hov:linear-gradient(135deg,#A7EBF2,#54ACBF);--hfg:#011C40;--hfm:rgba(1,28,64,.8);--hchip:rgba(1,28,64,.13)}
+.rt3{--rest:linear-gradient(135deg,rgba(4,41,77,.34),rgba(1,22,50,.24));--hov:linear-gradient(135deg,#54ACBF,#6DBACB);--hfg:#011C40;--hfm:rgba(1,28,64,.82);--hchip:rgba(1,28,64,.13)}
 /* Experience: only dark glass shades, with a deeper teal glow on hover */
-.et1{--rest:linear-gradient(135deg,rgba(2,56,89,.82),rgba(1,28,64,.74));--hov:linear-gradient(135deg,#26658C,#023859)}
-.et2{--rest:linear-gradient(135deg,rgba(4,41,77,.84),rgba(2,26,56,.8));--hov:linear-gradient(135deg,#1F5679,#26658C)}
-.et3{--rest:linear-gradient(135deg,rgba(1,28,64,.86),rgba(2,56,89,.66));--hov:linear-gradient(135deg,#023859,#2a6a8f)}
-.et4{--rest:linear-gradient(135deg,rgba(10,53,86,.8),rgba(3,32,63,.78));--hov:linear-gradient(135deg,#26658C,#1b4f73)}
-.et5{--rest:linear-gradient(135deg,rgba(2,36,68,.86),rgba(1,22,50,.82));--hov:linear-gradient(135deg,#2a6a8f,#04304f)}
-.et6{--rest:linear-gradient(135deg,rgba(11,58,94,.78),rgba(4,35,65,.8));--hov:linear-gradient(135deg,#1F5679,#023859)}
+.et1{--rest:linear-gradient(135deg,rgba(2,56,89,.34),rgba(1,28,64,.20));--hov:linear-gradient(135deg,#26658C,#023859)}
+.et2{--rest:linear-gradient(135deg,rgba(4,41,77,.34),rgba(2,26,56,.24));--hov:linear-gradient(135deg,#1F5679,#26658C)}
+.et3{--rest:linear-gradient(135deg,rgba(1,28,64,.36),rgba(2,56,89,.18));--hov:linear-gradient(135deg,#023859,#2a6a8f)}
+.et4{--rest:linear-gradient(135deg,rgba(10,53,86,.32),rgba(3,32,63,.24));--hov:linear-gradient(135deg,#26658C,#1b4f73)}
+.et5{--rest:linear-gradient(135deg,rgba(2,36,68,.36),rgba(1,22,50,.26));--hov:linear-gradient(135deg,#2a6a8f,#04304f)}
+.et6{--rest:linear-gradient(135deg,rgba(11,58,94,.30),rgba(4,35,65,.24));--hov:linear-gradient(135deg,#1F5679,#023859)}
 .rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
 .rs{padding:30px 32px}
 .rs .stat b{font-size:clamp(48px,6vw,76px)}
-.stat span{margin-top:10px}
+.stat>span{margin-top:10px}
 
 /* ================= about ================= */
 .aboutgrid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;margin-top:22px}
