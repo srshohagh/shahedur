@@ -37,7 +37,7 @@ export const creative = [
 ];
 
 export const skills = [
-  ['AI automation tools', '#54ACBF'], ['N8n Automation', '#7CC9D6'], ['MERN stack', '#54ACBF'], ['Web development', '#7CC9D6'], ['Frontend Development', '#54ACBF']
+  ['AI automation tools', '#54ACBF'], ['N8n Automation', '#7CC9D6'], ['MERN stack', '#54ACBF'], ['Web development', '#7CC9D6'], ['Frontend Development', '#54ACBF'], 
   ['Python', '#A7EBF2'], ['Videography', '#7CC9D6'], ['Cinematography', '#54ACBF'], ['Content creation', '#7CC9D6'], 
   ['Lead generation', '#A7EBF2'], ['Cold outreach', '#54ACBF'], ['Business development', '#A7EBF2'],
   ['Client acquisition', '#A7EBF2'], ['Deal closing', '#54ACBF'],
