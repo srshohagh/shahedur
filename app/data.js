@@ -1,16 +1,16 @@
 export const jobs = [
-  { t: 'Executive, Sales: Softvence Agency', m: 'Feb 2026 to present · Mohakhali, Dhaka', d: 'Talk with international clients, understand their needs, lock core features, write proposals (scope, deliverables, timeline, pricing), send custom offers, close deals on Fiverr Zoom and keep every query organised in Odoo.' },
-  { t: 'International Telemarketing Agent: Sales Squad Call Center', m: 'Nov 2025 to Feb 2026', d: 'Served US-based clients by phone, building the habit of clear, confident communication under targets.' },
-  { t: 'Manager & Sales: Mihan Enterprise', m: 'Jul 2024 to Oct 2025', d: 'Led a team of five. Handled wholesale sales, inventory and customer relations.' },
-  { t: 'Marketing Associate: Immune Studio', m: 'Jan 2024 to Jun 2024', d: 'Wrote marketing content and promotional copy.' },
+  { t: 'Executive, Sales: Softvence Agency', m: 'Feb 2026 to present · Mohakhali, Dhaka', d: 'Communicate with international clients, understand their needs, lock core features, write proposals (scope, deliverables, timeline, pricing), send custom offers, close deals on Fiverr Zoom and keep every query organised in CRM.' },
+  { t: 'International Telemarketing Agent: Sales Squad Call Center', m: 'Nov 2025 to Feb 2026', d: 'Served US-based clients over the phone, building the habit of clear, confident communication under targets.' },
+  { t: 'Sales Manager: Mihan Enterprise', m: 'Jul 2024 to Oct 2025', d: 'Led a team of five. Handled wholesale sales, inventory and customer relations.' },
+  { t: 'Marketing Associate: Immune Studio', m: 'Jan 2024 to Jun 2024', d: 'Wrote marketing content, screenwriting, video speech and promotional copy.' },
   { t: 'Enumerator: Action for Innovative Research', m: 'Jan 2023 to Dec 2023', d: 'Ran household surveys for a Roads and Highways Department research project.' },
-  { t: 'Content Manager: Chitro Multimedia and Studio', m: 'Mar 2020 to Sep 2021 · Mirpur-1, Dhaka', d: 'Shot live music videos, made short-form videos and reels, edited rough cuts and handled clients for video and image editing.' },
+  { t: 'Content Manager: Chitro Multimedia and Studio', m: 'Mar 2020 to Sep 2021 · Mirpur-1, Dhaka', d: 'Shot live music videos, made short-form videos and reels, wrote scripts, edited rough cuts and handled clients for video and image editing.' },
 ];
 
 export const stats = [
   { v: 11273, prefix: '$', l: 'total sales from 33 orders' },
   { v: 10289, prefix: '$', l: 'delivered across 30 orders' },
-  { v: 30305, prefix: '$', l: 'total project value handled' },
+  { v: 32205, prefix: '$', l: 'total project value handled' },
 ];
 
 // Sequenced as a delivery journey: understand, build (4 services), close.
@@ -37,11 +37,11 @@ export const creative = [
 ];
 
 export const skills = [
-  ['n8n AI automation', '#54ACBF'], ['AI tools', '#54ACBF'],
-  ['Videography', '#7CC9D6'], ['Cinematography', '#7CC9D6'], ['Video editing (beginner)', '#7CC9D6'], ['Content creation', '#7CC9D6'],
+  ['AI automation tools', '#54ACBF'], ['N8n Automation', '#54ACBF'], ['MERN stack', '#54ACBF'], 
+  ['Videography', '#7CC9D6'], ['Cinematography', '#7CC9D6'], ['Content creation', '#7CC9D6'],
   ['Lead generation', '#A7EBF2'], ['Cold outreach', '#A7EBF2'], ['Business development', '#A7EBF2'],
-  ['Fiverr marketplace', '#A7EBF2'], ['Proposal writing', '#A7EBF2'], ['Deal closing', '#A7EBF2'],
-  ['Odoo CRM', '#4F8FB8'], ['Google Workspace', '#4F8FB8'], ['Microsoft Office', '#4F8FB8'],
+  ['Client acquisition', '#A7EBF2'], ['Deal closing', '#A7EBF2'],
+  ['CRM', '#4F8FB8'], ['Google Workspace', '#4F8FB8'], ['Microsoft Office', '#4F8FB8'],
   ['Team leadership', '#A7EBF2'],
 ];
 
