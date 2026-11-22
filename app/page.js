@@ -5,11 +5,11 @@ import GlowEffects from '../components/GlowEffects';
 import CountUp from '../components/CountUp';
 import Nav from '../components/Nav';
 import ContactForm from '../components/ContactForm';
-import { WaIcon, MailIcon, InIcon, GhIcon, YtIcon, DocIcon, Ico } from '../components/Icons';
+import ChatWidget from '../components/ChatWidget';
+import { InIcon, GhIcon, YtIcon, DocIcon, Ico } from '../components/Icons';
 import { stats, jobs, services, strategy, creative, skills, languages, education } from './data';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH || '';
-const WA = 'https://wa.me/8801875601397?text=' + encodeURIComponent('Hi Shohagh, I found your portfolio and would like to talk.');
 
 const SH = ({ i, title, sub }) => (
   <>
@@ -163,7 +163,7 @@ export default function Home() {
         </div></section>
       </main>
 
-      <a className="wa-float" href={WA} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"><WaIcon /><span>Chat on WhatsApp</span></a>
+      <ChatWidget />
       <footer>© {new Date().getFullYear()} Md. Shahedur Rahman (Shohagh) · Dhaka, Bangladesh</footer>
     </>
   );
