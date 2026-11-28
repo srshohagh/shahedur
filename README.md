@@ -32,3 +32,6 @@ Then open http://localhost:3000
 
 ## Contact form
 The form needs no server. It opens WhatsApp or the visitor's email app with the message already written. To receive messages directly on the site later, connect a form service or a small backend.
+
+## AI chat assistant
+The blue orb in the corner opens a chat that answers questions and takes meeting requests with no setup. To connect a real AI model, read `AI-AGENT-GUIDE.md` (backend code is in `chat-backend/worker.js`) and set `apiUrl` in `app/chatConfig.js`.

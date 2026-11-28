@@ -1,0 +1,22 @@
+/* ================= floating, moving navigation ================= */
+.topnav{position:fixed;top:14px;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:0 14px;pointer-events:none;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1),opacity .4s}
+.topnav.flow{position:absolute}
+.topnav.is-hidden{transform:translateY(-150%);opacity:0}
+.navpill{pointer-events:auto;display:flex;align-items:center;gap:6px;max-width:100%;padding:6px 6px 6px 8px;border-radius:999px;
+  background:rgba(1,28,64,.88);border:1px solid var(--line);box-shadow:0 12px 34px rgba(0,8,26,.5),inset 0 1px 0 rgba(167,235,242,.1)}
+.navpill ul{list-style:none;margin:0;padding:0;display:flex;gap:2px;position:relative;overflow-x:auto;scrollbar-width:none;min-width:0}
+.navpill ul::-webkit-scrollbar{display:none}
+.navpill li{flex:none}
+.navpill a:not(.btn){display:block;position:relative;z-index:1;padding:9px 14px;border-radius:999px;color:var(--mute);font-size:14px;text-decoration:none;white-space:nowrap;transition:color .2s}
+.navpill a:not(.btn):hover,.navpill a:not(.btn):focus-visible{color:#fff;animation:whiteglow 1.4s ease-in-out infinite}
+.navpill a.on{color:#fff}
+.slider{position:absolute;left:0;top:0;bottom:0;border-radius:999px;pointer-events:none;z-index:0;
+  background:rgba(84,172,191,.28);border:1px solid rgba(167,235,242,.3);transition:transform .4s cubic-bezier(.2,.8,.2,1),width .4s cubic-bezier(.2,.8,.2,1)}
+.navcta{flex:none;padding:9px 18px;font-size:14px}
+@keyframes whiteglow{0%,100%{text-shadow:0 0 6px rgba(255,255,255,.55),0 0 14px rgba(255,255,255,.25)}50%{text-shadow:0 0 10px rgba(255,255,255,.95),0 0 24px rgba(255,255,255,.55),0 0 40px rgba(167,235,242,.35)}}
+@media(prefers-reduced-motion:reduce){.topnav,.slider{transition:none}.navpill a:hover{animation:none}}
+
+/* the floating bar sits over the top of the page, so give the hero some room */
+.hero{padding-top:96px}
+@media(max-width:820px){.hero{padding-top:84px}}

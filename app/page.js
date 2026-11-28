@@ -6,16 +6,20 @@ import CountUp from '../components/CountUp';
 import Nav from '../components/Nav';
 import ContactForm from '../components/ContactForm';
 import ChatWidget from '../components/ChatWidget';
+import ServiceCarousel from '../components/ServiceCarousel';
+import TiltCards from '../components/TiltCards';
+import SkillsVisual from '../components/SkillsVisual';
 import { InIcon, GhIcon, YtIcon, DocIcon, Ico } from '../components/Icons';
-import { stats, jobs, services, strategy, creative, skills, languages, education } from './data';
+import { stats, jobs, services, strategy, creative, languages, education } from './data';
 
 const base = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
-const SH = ({ i, title, sub }) => (
-  <>
-    <div className="sh"><span className="ic"><Ico n={i} /></span><h2>{title}</h2><i className="ln" /></div>
+const SH = ({ n, i, eyebrow, title, sub }) => (
+  <div className="sh2">
+    <div className="eyebrow"><span className="ic"><Ico n={i} /></span><em>{n}</em><span>{eyebrow}</span><i className="ln" /></div>
+    <h2>{title}</h2>
     {sub && <p className="sub">{sub}</p>}
-  </>
+  </div>
 );
 
 export default function Home() {
@@ -51,7 +55,7 @@ export default function Home() {
 
       <main>
         <section id="about"><div className="wrap">
-          <SH i="user" title="About" />
+          <SH n="01" i="user" eyebrow="Introduction" title="About" />
           <div className="aboutgrid">
             <div className="g pad about">
               <p>My work sits where sales, technology and content meet. Day to day, that means international client communication, requirement scoping, proposal writing and deal closing, supported by working knowledge of n8n automation, CRM tools such as Odoo, and video production.</p>
@@ -76,7 +80,7 @@ export default function Home() {
         </div></section>
 
         <section id="results"><div className="wrap">
-          <SH i="bars" title="Results so far" sub="Numbers from my Fiverr sales dashboard, April to September 2026." />
+          <SH n="02" i="bars" eyebrow="Track record" title="Results so far" sub="Numbers from my Fiverr sales dashboard, April to September 2026." />
           <div className="rgrid">
             {stats.map((s, i) => (
               <div className={`g tone rt${i + 1} rs`} key={s.l}>
@@ -87,7 +91,7 @@ export default function Home() {
         </div></section>
 
         <section id="experience"><div className="wrap">
-          <SH i="briefcase" title="Experience" sub="Sales, marketing, content and customer work, newest first." />
+          <SH n="03" i="briefcase" eyebrow="Career" title="Experience" sub="Sales, marketing, content and customer work, newest first." />
           <div className="grid2">
             {jobs.map((j, i) => (
               <div className={`g tone et${(i % 6) + 1} job`} key={j.t}>
@@ -99,48 +103,27 @@ export default function Home() {
         </div></section>
 
         <section id="services"><div className="wrap">
-          <SH i="grid" title="Services" sub="Platforms and workflows scoped, priced and managed for international clients." />
-          <div className="grid3">
-            {services.map((s, i) => (
-              <div className="g svc" key={s.t}>
-                <span className="num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="ic lg"><Ico n={s.i} /></span>
-                <h3>{s.t}</h3>
-                {s.tag && <div className="meta">{s.tag}</div>}
-                <p>{s.d}</p>
-              </div>
-            ))}
-          </div>
+          <SH n="04" i="grid" eyebrow="What I do" title="Services" sub="Platforms and workflows scoped, priced and managed for international clients." />
+          <ServiceCarousel items={services} />
         </div></section>
 
         <section id="creative"><div className="wrap">
-          <SH i="play" title="Content and video" sub="Video, scripts and content work that started well before sales." />
-          <div className="grid3">
-            {creative.map((c) => (
-              <div className="g svc" key={c.t}>
-                <span className="ic lg"><Ico n={c.i} /></span>
-                <h3>{c.t}</h3><p>{c.d}</p>
-              </div>
-            ))}
-          </div>
+          <SH n="05" i="play" eyebrow="Creative work" title="Content and video" sub="Video, scripts and content work that started well before sales." />
+          <TiltCards items={creative} />
           <p className="note">Creative version of my resume: <a href={`${base}/resume-creative.pdf`}>resume-creative.pdf</a></p>
         </div></section>
 
         <section id="skills"><div className="wrap">
-          <SH i="bolt" title="Skills" sub="Tools and strengths used every day." />
-          <div className="skillgrid">
-            <div className="g pad"><h3 className="mini">Core skills</h3>
-              <div className="tags">{skills.map(([label, c]) => <span key={label} style={{ '--c': c }}>{label}</span>)}</div>
-            </div>
-            <div className="stack">
-              <div className="g pad"><h3 className="mini">Certification</h3><b>OPSWAT Cybersecurity Fundamentals Associate (OCFA)</b><p>OPSWAT Academy, issued October 2026.</p></div>
-              <div className="g pad"><h3 className="mini">Languages</h3><div className="tags">{languages.map((l) => <span key={l}>{l}</span>)}</div></div>
-            </div>
+          <SH n="06" i="bolt" eyebrow="Expertise" title="Skills and tools" sub="The platforms and strengths used every day." />
+          <SkillsVisual />
+          <div className="skillmeta">
+            <div className="g pad"><h3 className="mini">Certification</h3><b>OPSWAT Cybersecurity Fundamentals Associate (OCFA)</b><p>OPSWAT Academy, issued October 2026.</p></div>
+            <div className="g pad"><h3 className="mini">Languages</h3><div className="tags">{languages.map((l) => <span key={l}>{l}</span>)}</div></div>
           </div>
         </div></section>
 
         <section id="education"><div className="wrap">
-          <SH i="cap" title="Education" />
+          <SH n="07" i="cap" eyebrow="Background" title="Education" />
           <div className="grid3">
             {education.map((e) => (
               <div className="g svc" key={e.t}><h3>{e.t}</h3><p>{e.d}<br />{e.y}</p></div>
@@ -150,7 +133,7 @@ export default function Home() {
         </div></section>
 
         <section id="contact" className="contact"><div className="wrap">
-          <SH i="mail" title="Contact" sub="Send a message by WhatsApp or email." />
+          <SH n="08" i="mail" eyebrow="Get in touch" title="Contact" sub="Send a message by WhatsApp or email." />
           <div className="contactgrid">
             <div className="contactinfo">
               <h3>Let&rsquo;s work together</h3>
